@@ -18,6 +18,7 @@ csv_file.write(url_content)
 csv_file.close()
 """
 
+
 class Server:
     """Server class to paginate a database of popular baby names.
     """
@@ -72,7 +73,6 @@ if __name__ == "__main__":
         should_err = server.get_page(2, 'Bob')
     except AssertionError:
         print("AssertionError raised when page and/or page_size are not ints")
-
 
     print(server.get_page(1, 3))
     print(server.get_page(3, 2))
