@@ -93,6 +93,8 @@ class Server:
         """
         Method that returns hyper_index dictionary
         """
+        assert index >= 0
+        assert index < len(self.__dataset)
         num_of_pages = len(self.__dataset) / page_size
         page = math.ceil(index / page_size)
         hyper_index_dict = {
