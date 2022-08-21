@@ -2,9 +2,9 @@
 """
 Simple helper function
 """
+from typing import Tuple
 
-
-def index_range(page: int, page_size: int) -> tuple[int, int]:
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
     Method that takes page and page_size args and returns tuple
     containing start_index and end_index corresponding to the range
