@@ -46,48 +46,13 @@ class Server:
         start_index = end_index - page_size
         return (start_index, end_index)
 
-    def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+    def get_page(self, index: int = None, page_size: int = 10) -> List[List]:
         assert isinstance(page_size, int)
-        assert type(page) == int
+        assert type(index) == int
         assert page_size > 0
-        assert page > 0
-        index = self.index_range(page, page_size)
-        data = self.dataset()[index[0]: index[1]]
+        assert index >= 0
+        data = self.dataset()[index: index + page_size]
         return data
-
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
-        """
-        Returns dictionary with information about the dataset
-        """
-        data_size = len(self.dataset())
-        total_pages = math.ceil(data_size / page_size)
-        data = self.get_page(page, page_size)
-
-        def next_page(page: int, page_size: int) -> Optional[int]:
-            """
-            Returns next page number or None if no next page
-            """
-            if (page >= total_pages):
-                return None
-            return page + 1
-
-        def prev_page(page: int, page_size: int) -> Optional[int]:
-            """
-            Returns previous ppage number or None if no previous page
-            """
-            if (page == 1):
-                return None
-            return page - 1
-
-        hyper_dict = {
-            'page_size': len(data),
-            'page': page,
-            'data': data,
-            'next_page': next_page(page, page_size),
-            'prev_page': prev_page(page, page_size),
-            'total_pages': math.ceil(len(self.dataset()) / page_size)
-        }
-        return hyper_dict
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
@@ -96,15 +61,12 @@ class Server:
         assert index >= 0
         assert index < len(self.__dataset)
         num_of_pages = len(self.__dataset) / page_size
-        if (index == 0):
-            page = 1
-        else:
-            page = math.ceil(index / page_size)
+
         hyper_index_dict = {
             "index": index,
-            "next_index": index + page_size,
+            "next_index": list(sorted(self.__indexed_dataset))[index + page_size],
             "page_size": page_size,
-            "data": self.get_page(page, page_size)
+            "data": self.get_page(index, page_size)
         }
         return hyper_index_dict
 
@@ -119,8 +81,8 @@ if __name__ == "__main__":
     except AssertionError:
         print("AssertionError raised when out of range")
 
-    index = 0
-    page_size = 10
+    index = 3
+    page_size = 2
 
     print("Nb items: {}".format(len(server._Server__indexed_dataset)))
 
