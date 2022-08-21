@@ -96,7 +96,10 @@ class Server:
         assert index >= 0
         assert index < len(self.__dataset)
         num_of_pages = len(self.__dataset) / page_size
-        page = math.ceil(index / page_size)
+        if (index == 0):
+            page = 1
+        else:
+            page = math.ceil(index / page_size)
         hyper_index_dict = {
             "index": index,
             "next_index": index + page_size,
@@ -116,8 +119,8 @@ if __name__ == "__main__":
     except AssertionError:
         print("AssertionError raised when out of range")
 
-    index = 3
-    page_size = 2
+    index = 0
+    page_size = 10
 
     print("Nb items: {}".format(len(server._Server__indexed_dataset)))
 
