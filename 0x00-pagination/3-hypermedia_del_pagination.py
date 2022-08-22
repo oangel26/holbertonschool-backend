@@ -5,7 +5,7 @@ Deletion-resilient hypermedia pagination
 
 import csv
 import math
-from typing import List, Dict
+from typing import List, Dict, Optional, Tuple
 
 
 class Server:
@@ -39,7 +39,7 @@ class Server:
             }
         return self.__indexed_dataset
 
-    def index_range(self, page: int, page_size: int) -> tuple[int, int]:
+    def index_range(self, page: int, page_size: int) -> Tuple[int, int]:
         """return correct indexes to paginate the dataset
         """
         end_index = page * page_size
@@ -61,12 +61,37 @@ class Server:
         assert index >= 0
         assert index < len(self.__dataset)
         num_of_pages = len(self.__dataset) / page_size
+        get_index = self.__indexed_dataset.get(index)
+
+        def next_index(index: int, page_size: int) -> Optional[int]:
+            """
+            Returns next page number or None if no next page
+            """
+            counter = -1
+            for i in range(len(self.__indexed_dataset)):
+                if index + i in self.__indexed_dataset:
+                    counter += 1
+                    if counter == page_size:
+                        return index + i
+
+        def hyper_data(index: int, page_size: int) -> List[List]:
+            """
+            Return list of the data set acording to the list and page
+            """
+            data_list = []
+            counter = 0
+            for i in range(len(self.__indexed_dataset)):
+                if index + i in self.__indexed_dataset:
+                    counter += 1
+                    data_list.append(self.__indexed_dataset.get(index + i))
+                    if counter == page_size:
+                        return data_list
 
         hyper_index_dict = {
             "index": index,
-            "next_index": list(sorted(self.__indexed_dataset))[index + page_size],
+            "next_index": next_index(index, page_size),
             "page_size": page_size,
-            "data": self.get_page(index, page_size)
+            "data": hyper_data(index, page_size)
         }
         return hyper_index_dict
 
