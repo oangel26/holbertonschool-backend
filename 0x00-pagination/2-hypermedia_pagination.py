@@ -6,7 +6,7 @@ Hypermedia pagination
 import requests
 import csv
 import math
-from typing import List, TypedDict, Optional, Dict
+from typing import List, TypedDict, Optional, Dict, Tuple
 
 
 """
@@ -28,7 +28,7 @@ class Server:
     def __init__(self):
         self.__dataset = None
 
-    def index_range(self, page: int, page_size: int) -> tuple[int, int]:
+    def index_range(self, page: int, page_size: int) -> Tuple[int, int]:
         """return correct indexes to paginate the dataset
         """
         end_index = page * page_size
