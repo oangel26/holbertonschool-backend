@@ -6,8 +6,10 @@ Hypermedia pagination
 import requests
 import csv
 import math
-from typing import List, TypedDict, Optional
+from typing import List, TypedDict, Optional, Dict
 
+
+"""
 Dict = TypedDict('Dict', {'page_size': int,
                           'page': int,
                           'data': List[List],
@@ -15,6 +17,8 @@ Dict = TypedDict('Dict', {'page_size': int,
                           'prev_page': Optional[int],
                           'total_pages': int
                           })
+"""
+
 
 class Server:
     """Server class to paginate a database of popular baby names.
@@ -96,4 +100,3 @@ if __name__ == "__main__":
     print(server.get_hyper(100, 3))
     print("---")
     print(server.get_hyper(3000, 100))
-
