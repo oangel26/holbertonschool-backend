@@ -19,14 +19,6 @@ csv_file.close()
 """
 
 
-def index_range(page: int, page_size: int) -> Tuple[int, int]:
-        """return correct indexes to paginate the dataset
-        """
-        end_index = page * page_size
-        start_index = end_index - page_size
-        return (start_index, end_index)
-
-
 class Server:
     """Server class to paginate a database of popular baby names.
     """
@@ -46,12 +38,22 @@ class Server:
 
         return self.__dataset
 
+    def index_range(self, page: int, page_size: int) -> Tuple[int, int]:
+        """return correct indexes to paginate the dataset
+        """
+        end_index = page * page_size
+        start_index = end_index - page_size
+        return (start_index, end_index)
+
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """Returns list with page information form dataset, organized by
+        the page number and page size given
+        """
         assert isinstance(page_size, int)
         assert type(page) == int
         assert page_size > 0
         assert page > 0
-        index = index_range(page, page_size)
+        index = self.index_range(page, page_size)
         data = self.dataset()[index[0]: index[1]]
         return data
 
