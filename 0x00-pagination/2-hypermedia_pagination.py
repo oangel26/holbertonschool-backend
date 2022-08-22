@@ -3,21 +3,9 @@
 Hypermedia pagination
 """
 
-import requests
 import csv
 import math
-from typing import List, TypedDict, Optional, Dict, Tuple
-
-
-"""
-Dict = TypedDict('Dict', {'page_size': int,
-                          'page': int,
-                          'data': List[List],
-                          'next_page': Optional[int],
-                          'prev_page': Optional[int],
-                          'total_pages': int
-                          })
-"""
+from typing import List, Optional, Dict, Tuple
 
 
 class Server:
