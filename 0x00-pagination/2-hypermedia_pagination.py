@@ -47,6 +47,9 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """Returns list with page information form dataset, organized by
+        the page number and page size given
+        """
         assert isinstance(page_size, int)
         assert type(page) == int
         assert page_size > 0
