@@ -42,7 +42,7 @@ class MRUCache(BaseCaching):
                                     )[BaseCaching.MAX_ITEMS - 1][0]
                     self.counter_dict.pop(del_key)
                     self.cache_data.pop(del_key)
-                    print(f'DISCARD {del_key}')
+                    print(f'DISCARD: {del_key}')
                     self.counter_dict[key] = MRUCache.COUNTER
                     self.cache_data[key] = item
 
@@ -58,29 +58,29 @@ class MRUCache(BaseCaching):
 
 
 if __name__ == "__main__":
-    my_cache = MRUCache()
-    my_cache.put("A", "Hello")
-    my_cache.put("B", "World")
-    my_cache.put("C", "Holberton")
-    my_cache.put("D", "School")
-    my_cache.print_cache()
-    print(my_cache.get("B"))
-    my_cache.put("E", "Battery")
-    my_cache.print_cache()
-    my_cache.put("C", "Street")
-    my_cache.print_cache()
-    print(my_cache.get("A"))
-    print(my_cache.get("B"))
-    print(my_cache.get("C"))
-    my_cache.put("F", "Mission")
-    my_cache.print_cache()
-    my_cache.put("G", "San Francisco")
-    my_cache.print_cache()
-    my_cache.put("H", "H")
-    my_cache.print_cache()
-    my_cache.put("I", "I")
-    my_cache.print_cache()
-    my_cache.put("J", "J")
-    my_cache.print_cache()
-    my_cache.put("K", "K")
-    my_cache.print_cache()
+    """
+    Test
+    """
+    import sys
+
+    try:
+        MRUCache = __import__('4-mru_cache').MRUCache
+        from base_caching import BaseCaching
+
+        BaseCaching.MAX_ITEMS = 1
+        MRUCache.MAX_ITEMS = 1
+        my_cache = MRUCache()
+        my_cache.MAX_ITEMS = 1
+        prev_key = None
+
+        for i in range(5):
+            key = "key-{}".format(i)
+            value = "value-{}".format(i)
+            if prev_key is not None:
+                my_cache.get(key)
+            prev_key = key
+            my_cache.put(key, value)
+            my_cache.print_cache()
+
+    except:
+        print(sys.exc_info()[1])
