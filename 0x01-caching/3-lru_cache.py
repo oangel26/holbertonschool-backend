@@ -51,6 +51,7 @@ class LRUCache(BaseCaching):
         if key is None:
             return None
         if self.cache_data.get(key) is not None:
+            LRUCache.COUNTER += 1
             self.counter_dict[key] = LRUCache.COUNTER
         return self.cache_data.get(key)
 
