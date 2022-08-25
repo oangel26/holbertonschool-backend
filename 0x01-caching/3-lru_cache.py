@@ -41,7 +41,7 @@ class LRUCache(BaseCaching):
                                     key=operator.itemgetter(1)))[0][0]
                     self.counter_dict.pop(del_key)
                     self.cache_data.pop(del_key)
-                    print(f'DISCARD {del_key}')
+                    print(f'DISCARD: {del_key}')
                     self.counter_dict[key] = LRUCache.COUNTER
                     self.cache_data[key] = item
 
