@@ -20,7 +20,6 @@ class FIFOCache(BaseCaching):
         """Assign self.cache_data the item value for the given key.
         """
         if (key is None or item is None):
-            print("entro a pass")
             pass
         else:
             self.cache_data[key] = item
